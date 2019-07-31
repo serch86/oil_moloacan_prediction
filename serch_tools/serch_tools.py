@@ -33,12 +33,23 @@ def train_test_valid_split(df, x_cols, y_col):
     
     return x_train, x_test, x_valid, y_train, y_test, y_valid
 
-def report_evaluation_regression(y_real, y_pred):
+def report_evaluation_regression(y_real, y_pred, num_features):
+    """Reporte de evaluacion,
+    y_real, y_pred=y_estimada,num_features=numero de variables"""
+    R2=metrics.r2_score(y_real,y_pred)
+    n=len(y_real)
+    p=num_features
+    r2 = 1-(1-R2)*(n-1)/(n-p-1)
     
-    print("R*2: %1.4f" % metrics.r2_score(y_real,y_pred))
+    
+    print("$R^2$: %1.4f" % R2)
+    
+    print("$R^2 ajustada$: %1.4f" % r2)
+    
     print("MEA: %1.4f" % metrics.mean_absolute_error(y_real,y_pred))
-    print("MSE %1.3f" % metrics.mean_squared_error(y_real,y_pred))
-    print("RMSE %1.3f" % np.sqrt(metrics.mean_squared_error(y_real,y_pred)))
+    print("MSE %1.4f" % metrics.mean_squared_error(y_real,y_pred))
+    print("RMSE %1.4f" % np.sqrt(metrics.mean_squared_error(y_real,y_pred)))
+    
     
 def resi_plot(y_real, y_pred):
     
